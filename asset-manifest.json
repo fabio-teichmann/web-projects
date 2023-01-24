@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/web-projects/robofriends/static/css/main.8ed9c120.css",
-    "main.js": "/web-projects/robofriends/static/js/main.69e7c5ba.js",
-    "static/js/787.32032a02.chunk.js": "/web-projects/robofriends/static/js/787.32032a02.chunk.js",
-    "static/media/SEGA-LOGO-FONT.ttf.woff": "/web-projects/robofriends/static/media/SEGA-LOGO-FONT.ttf.e0f4cb928b3bb37a1813.woff",
-    "index.html": "/web-projects/robofriends/index.html",
-    "main.8ed9c120.css.map": "/web-projects/robofriends/static/css/main.8ed9c120.css.map",
-    "main.69e7c5ba.js.map": "/web-projects/robofriends/static/js/main.69e7c5ba.js.map",
-    "787.32032a02.chunk.js.map": "/web-projects/robofriends/static/js/787.32032a02.chunk.js.map"
+    "main.css": "/web-projects/static/css/main.95c6287a.css",
+    "main.js": "/web-projects/static/js/main.cbb72f8d.js",
+    "static/js/787.32032a02.chunk.js": "/web-projects/static/js/787.32032a02.chunk.js",
+    "static/media/SEGA-LOGO-FONT.ttf.woff": "/web-projects/static/media/SEGA-LOGO-FONT.ttf.e0f4cb928b3bb37a1813.woff",
+    "index.html": "/web-projects/index.html",
+    "main.95c6287a.css.map": "/web-projects/static/css/main.95c6287a.css.map",
+    "main.cbb72f8d.js.map": "/web-projects/static/js/main.cbb72f8d.js.map",
+    "787.32032a02.chunk.js.map": "/web-projects/static/js/787.32032a02.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8ed9c120.css",
-    "static/js/main.69e7c5ba.js"
+    "static/css/main.95c6287a.css",
+    "static/js/main.cbb72f8d.js"
   ]
 }
