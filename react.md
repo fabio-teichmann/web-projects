@@ -13,3 +13,21 @@
 ## Classes vs. Hooks
 
 - hooks are fairly new, add complexity, are React-specific
+
+## Life Cycle Hooks
+
+- automatically calls certain functions (if exists) depending on the step in the process
+
+### Mouniting
+
+- constructor()
+- componentWillMount()
+- render()
+- componentDidMount()
+
+### Updating
+
+- render()
+- ...
+
+### Unmounting
