@@ -31,3 +31,8 @@
 - ...
 
 ### Unmounting
+
+## Deployment
+
+- github-pages
+  - [deploy from subdirectory](https://blog.raw.pm/en/deploying-subfolder-github-pages/)
