@@ -1,5 +1,5 @@
 import React from "react";
-import { CardList, CardList2 } from "../components/CardList";
+import { CardList2 } from "../components/CardList";
 import SearchBox from '../components/SearchBox';
 import Scroll from '../components/Scroll';
 import ErrorBoundary from "../components/ErrorBoundary";
@@ -43,6 +43,7 @@ class App extends React.Component {
     async componentDidUpdate(prevProps, prevState) {
         // let users = this.state.users;
         if (prevState.mode !== this.state.mode) {
+            this.setState({users: []})
             let users;
             if (this.state.mode === "star wars") {
                 const data = await getStarWarsUsers();
