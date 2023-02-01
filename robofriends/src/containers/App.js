@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { CardList2 } from "../components/CardList";
 import SearchBox from '../components/SearchBox';
 import Scroll from '../components/Scroll';
@@ -7,6 +7,66 @@ import { getUsers, getStarWarsUsers } from "../api/userInfo";
 import ModeButton from '../components/ModeButton';
 // import { robots } from './robots';
 import './App.css';
+
+const App2 = () => {
+    const [users, setUsers] = useState([]);
+    const [searchfield, setSearchfield] = useState('');
+    const [mode, setMode] = useState('robots');
+
+    useEffect(() => {
+        (async () => {
+            const users = await getUsers();
+            setUsers(users);
+        })();
+    },[])
+
+    useEffect(() => {
+        (async () => {
+            setUsers([])
+            let users;
+            if (mode === "star wars") {
+                const data = await getStarWarsUsers();
+                users = data.results;
+            } else if (mode === "robots") {
+                users = await getUsers();
+            }
+            setUsers(users);
+        })();
+    }, [mode])
+
+    const onSearchChange = (event) => {
+        setSearchfield(event.target.value);
+    }
+
+    const onClickChange = (event) => {
+        setMode(event.target.innerText.toLowerCase());
+    }
+
+    const filterRobots = users.filter(user => {
+        return user.name.toLowerCase().includes(searchfield.toLowerCase())
+    });
+
+    if (!users.length) {
+        return <h1 className="tc">Loading...</h1>
+    } else {
+        return (
+            <div className="tc">
+                <h1 className="f2">RoboFriends</h1>
+                <SearchBox searchChange={onSearchChange}/>
+                <ModeButton clickChange={onClickChange} name="Star Wars"/>
+                <ModeButton clickChange={onClickChange} name="Robots"/>
+                <Scroll>
+                    <ErrorBoundary>
+                        <CardList2 users={filterRobots} mode={mode}/> 
+                    </ErrorBoundary>
+                </Scroll>
+            </div>
+        );
+    }
+}
+
+
+
 
 // smart component, since it has STATE
 class App extends React.Component {
@@ -94,4 +154,4 @@ class App extends React.Component {
     }
 }
 
-export default App;
+export default App2;
