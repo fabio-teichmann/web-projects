@@ -1,4 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
+import { connect } from "react-redux";
+
 import { CardList2 } from "../components/CardList";
 import SearchBox from '../components/SearchBox';
 import Scroll from '../components/Scroll';
@@ -8,65 +10,23 @@ import ModeButton from '../components/ModeButton';
 // import { robots } from './robots';
 import './App.css';
 
-const App2 = () => {
-    const [users, setUsers] = useState([]);
-    const [searchfield, setSearchfield] = useState('');
-    const [mode, setMode] = useState('robots');
+import { requestRobots, setSearchfield } from "../actions";
 
-    useEffect(() => {
-        (async () => {
-            const users = await getUsers();
-            setUsers(users);
-        })();
-    },[])
-
-    useEffect(() => {
-        (async () => {
-            setUsers([])
-            let users;
-            if (mode === "star wars") {
-                const data = await getStarWarsUsers();
-                users = data.results;
-            } else if (mode === "robots") {
-                users = await getUsers();
-            }
-            setUsers(users);
-        })();
-    }, [mode])
-
-    const onSearchChange = (event) => {
-        setSearchfield(event.target.value);
-    }
-
-    const onClickChange = (event) => {
-        setMode(event.target.innerText.toLowerCase());
-    }
-
-    const filterRobots = users.filter(user => {
-        return user.name.toLowerCase().includes(searchfield.toLowerCase())
-    });
-
-    if (!users.length) {
-        return <h1 className="tc">Loading...</h1>
-    } else {
-        return (
-            <div className="tc">
-                <h1 className="f2">RoboFriends</h1>
-                <SearchBox searchChange={onSearchChange}/>
-                <ModeButton clickChange={onClickChange} name="Star Wars"/>
-                <ModeButton clickChange={onClickChange} name="Robots"/>
-                <Scroll>
-                    <ErrorBoundary>
-                        <CardList2 users={filterRobots} mode={mode}/> 
-                    </ErrorBoundary>
-                </Scroll>
-            </div>
-        );
+const mapStateToProps = state => {
+    return {
+        searchField: state.searchRobots.searchField,
+        robots: state.requestRobots.robots,
+        isPending: state.requestRobots.isPending,
+        error: state.requestRobots.error,
     }
 }
-
-
-
+// dispatch === what triggers the action
+const mapDispathToProps = (dispatch) => {
+    return {
+        onSearchChange: (event) => dispatch(setSearchfield(event.target.value)),
+        onRequestRobots: () => dispatch(requestRobots())
+    }
+}
 
 // smart component, since it has STATE
 class App extends React.Component {
@@ -75,29 +35,18 @@ class App extends React.Component {
         super();
         this.state = {
             // can change
-            users: [],
-            searchfield: '',
+            // users: [],
+            // searchfield: '',
             mode: "robots"
         };
     }
 
     // part of React --> no arrow function
     async componentDidMount() {
-        // OLD VERSION:
-        // fetch('https://jsonplaceholder.typicode.com/users')
-        // .then(response => response.json())
-        // .then(users => this.setState({ robots: users }));
-        // let users = [];
-        // if (this.state.mode === "star wars") {
-        //     const data = await getStarWarsUsers();
-        //     users = data.results;
-        //     // console.log(users);
-        // } else if (this.state.mode === "robots") {
-        //     users = await getUsers();
-        //     // console.log(users);
-        // }
-        const users = await getUsers();
-        this.setState({ users: users});
+        
+        // const users = await getUsers();
+        // this.setState({ users: users});
+        this.props.onRequestRobots();
     }
 
     async componentDidUpdate(prevProps, prevState) {
@@ -117,10 +66,10 @@ class App extends React.Component {
         
     }
 
-    onSearchChange = (event) => {
-        // console.log(event);
-        this.setState({ searchfield: event.target.value })
-    }
+    // onSearchChange = (event) => {
+    //     // console.log(event);
+    //     this.setState({ searchfield: event.target.value })
+    // }
 
     onClickChange = (event) => {
         console.log(event.target.innerText.toLowerCase());
@@ -128,18 +77,32 @@ class App extends React.Component {
     }
     // classes need a `render()` function
     render() {
-        const { users, searchfield, mode} = this.state;
-        const filterRobots = users.filter(user => {
-            return user.name.toLowerCase().includes(searchfield.toLowerCase())
+        const { users, mode} = this.state;
+        const { searchField, onSearchChange, robots, isPending } = this.props;
+        const filterRobots = robots.filter(user => {
+            return user.name.toLowerCase().includes(searchField.toLowerCase())
         });
 
-        if (!users.length) {
-            return <h1 className="tc">Loading...</h1>
+        if (isPending) {
+            return (
+                <div className="tc">
+                    <h1 className="f2">RoboFriends</h1>
+                    <SearchBox searchChange={onSearchChange}/>
+                    <ModeButton clickChange={this.onClickChange} name="Star Wars"/>
+                    <ModeButton clickChange={this.onClickChange} name="Robots"/>
+                    <Scroll>
+                        <ErrorBoundary>
+                            <h1 className="tc">Loading...</h1> 
+                        </ErrorBoundary>
+                    </Scroll>
+                    
+                </div>
+            )
         } else {
             return (
                 <div className="tc">
                     <h1 className="f2">RoboFriends</h1>
-                    <SearchBox searchChange={this.onSearchChange}/>
+                    <SearchBox searchChange={onSearchChange}/>
                     <ModeButton clickChange={this.onClickChange} name="Star Wars"/>
                     <ModeButton clickChange={this.onClickChange} name="Robots"/>
                     <Scroll>
@@ -154,4 +117,4 @@ class App extends React.Component {
     }
 }
 
-export default App2;
+export default connect(mapStateToProps, mapDispathToProps)(App);
