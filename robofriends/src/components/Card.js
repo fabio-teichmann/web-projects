@@ -5,14 +5,13 @@ import './Card.css';
 const Card = ({id, name, email}) => {
     // const {id, name, email} = props;
     return (
-        <div className="tc bg-light-green dib br3 pa3 ma2 grow bw2 shadow-5">
+        <div className="tc bg-light-green dib br3 pa3 ma2 grow bw2 shadow-5 w5">
             <div>
             <button type="button">X</button>
             </div>
-            {/* <br></br> */}
             <img alt='robots' src={`https://robohash.org/${id}`} height={200}/>
             <div>
-                <h2>{name}</h2>
+                <h3>{name}</h3>
                 <p>{email}</p>
             </div>
         </div>
