@@ -7,6 +7,7 @@ import Scroll from '../components/Scroll';
 import ErrorBoundary from "../components/ErrorBoundary";
 import { getUsers, getStarWarsUsers } from "../api/userInfo";
 import ModeButton from '../components/ModeButton';
+import Header from "../components/Header";
 // import { robots } from './robots';
 import './App.css';
 
@@ -86,7 +87,8 @@ class App extends React.Component {
         if (isPending) {
             return (
                 <div className="tc">
-                    <h1 className="f2">RoboFriends</h1>
+                    {/* <h1 className="f2">RoboFriends</h1> */}
+                    <Header />
                     <SearchBox searchChange={onSearchChange}/>
                     <ModeButton clickChange={this.onClickChange} name="Star Wars"/>
                     <ModeButton clickChange={this.onClickChange} name="Robots"/>
