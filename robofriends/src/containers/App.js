@@ -103,7 +103,7 @@ class App extends React.Component {
         } else {
             return (
                 <div className="tc">
-                    <h1 className="f2">RoboFriends</h1>
+                    <Header />
                     <SearchBox searchChange={onSearchChange}/>
                     <ModeButton clickChange={this.onClickChange} name="Star Wars"/>
                     <ModeButton clickChange={this.onClickChange} name="Robots"/>
